@@ -1,3 +1,15 @@
 *.pyc
 *.db-shm
 *.db-wal
+*storage*
+*.log
+*.log.*
+*.db
+scenes.yaml
+scripts.yaml
+secrets.yaml
+configuration.yaml
+automations.yaml
+blueprints/
+.ha_run*
+.HA_VERSION

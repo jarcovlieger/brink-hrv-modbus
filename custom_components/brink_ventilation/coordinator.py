@@ -46,4 +46,10 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             if rate > 0:
                 self.last_fan_rate = rate
         except Exception as e:
-            _LOGGER.error("Modbus write failed: %s", e)
+            _LOGGER.error("Set fan flow rate failed: %s", e)
+
+    async def reset_filter_warning(self) -> None:
+        try:
+            await self._brink.reset_filter_warning()
+        except Exception as e:
+            _LOGGER.error("Reset filter warning failed: %s", e)
