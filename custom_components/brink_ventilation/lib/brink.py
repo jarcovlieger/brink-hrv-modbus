@@ -70,3 +70,9 @@ class Brink():
         result = await self._client.read_input_registers(address=4100, count=1, device_id=self._device_id)
         return result.registers[0] == 1
     
+    async def reset_filter_warning(self) -> None:
+        """
+        Resets the filter warning.
+        """
+        return await self._client.write_register(address=8010, value=1, device_id=self._device_id)
+    

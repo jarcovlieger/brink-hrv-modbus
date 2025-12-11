@@ -8,7 +8,11 @@ from homeassistant.core import HomeAssistant
 from .const import DOMAIN, CONF_HOST, CONF_PORT
 from .coordinator import BrinkHrvModbusCoordinator
 
-_PLATFORMS: list[Platform] = [Platform.SENSOR, Platform.FAN, Platform.BINARY_SENSOR]
+_PLATFORMS: list[Platform] = [
+    Platform.SENSOR, 
+    Platform.FAN, 
+    Platform.BINARY_SENSOR,
+    Platform.BUTTON]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Brink HRA Modbus from a config entry."""
