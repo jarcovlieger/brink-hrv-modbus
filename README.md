@@ -1,11 +1,11 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-[![GitHub Release](https://img.shields.io/github/release/jarcovlieger/brink.svg?style=for-the-badge&color=blue)](https://github.com/jarcovlieger/brink-hrv-modbus/releases) 
+[![GitHub Release](https://img.shields.io/github/release/jarcovlieger/brink-hrv-modbus.svg?style=for-the-badge&color=blue)](https://github.com/jarcovlieger/brink-hrv-modbus/releases) 
 
 # Brink HRV Modbus Integration
 Home Assistant integration to connect your Brink HRV (Heat Recovery Ventilation) to Home Assistant via Modbus TCP.
 
-<img src="./Images/Sensors_and_controls.png"/>
+<img src="Images/Sensors_and_controls.png"/>
 
 ## Installation
 To install the Brink HRV Modbus Integration, follow these steps:
