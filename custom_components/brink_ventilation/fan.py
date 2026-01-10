@@ -50,10 +50,10 @@ class BrinkFan(BrinkEntity,FanEntity):
         elif percentage is not None:
             await self.async_set_percentage(percentage)
         else:
-            await self.coordinator.set_fan_flow_rate(self.coordinator.last_fan_rate)
+            await self.coordinator.set_switch_position(self.coordinator.last_fan_rate)
 
     async def async_turn_off(self, **kwargs):
-        await self.coordinator.set_fan_flow_rate(0)
+        await self.coordinator.set_switch_position(0)
         await self.coordinator.async_request_refresh()
 
     async def async_set_percentage(self, percentage):
@@ -66,14 +66,14 @@ class BrinkFan(BrinkEntity,FanEntity):
         else:
             position = 3
 
-        await self.coordinator.set_fan_flow_rate(position)
+        await self.coordinator.set_switch_position(position)
         await self.coordinator.async_request_refresh()
 
     async def async_set_preset_mode(self, preset_mode: str):
         if preset_mode not in PRESETS:
             raise ValueError(f"Invalid preset mode: {preset_mode}")
 
-        await self.coordinator.set_fan_flow_rate(PRESETS[preset_mode])
+        await self.coordinator.set_switch_position(PRESETS[preset_mode])
         await self.coordinator.async_request_refresh()
         
     @property
