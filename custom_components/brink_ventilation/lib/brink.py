@@ -31,14 +31,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4046, count=1, device_id=self._device_id)
         return result.registers[0]/10.0 
     
-    async def set_modbus_control_switched_on(self, value: int) -> None:
+    async def set_modbus_control_switch_mode(self, value: int) -> None:
         """
         Sets the Modbus control switched on register.
         :param value: 0 = Off, 1 = switch, 2 = flow rate value
         """
         return await self._client.write_register(address=8000, value=value, device_id=self._device_id)
      
-    async def get_modbus_control_switched_on(self) -> None:
+    async def get_modbus_control_switch_mode(self) -> None:
         """
         Gets the Modbus control switched on register.
         :return: 0 = Off, 1 = switch, 2 = flow rate value

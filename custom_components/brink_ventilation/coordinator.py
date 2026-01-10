@@ -21,8 +21,9 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.supply_temperature = None
         self.exhaust_temperature = None
         self.fan_state = 0
-        self.last_fan_rate = 1
+        self.last_fan_position = 1
         self.filter_dirty = False
+        self.modbus_contol_mode = 0  # 0=off, 1=switch, 2=flow rate value
 
     @classmethod
     async def initialize(cls, hass, host, port):
@@ -36,15 +37,19 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.exhaust_temperature = await self._brink.get_exhaust_fan_temperature()
             self.fan_state = await self._brink.get_switch_position()
             self.filter_dirty = await self._brink.get_filter_dirty()
+            self.modbus_contol_mode = await self._brink.get_modbus_control_switch_mode()
         except Exception as e:
             _LOGGER.error("Modbus read failed: %s", e)
 
-    async def set_fan_flow_rate(self, rate: int):
+    async def set_switch_position(self, position: int):
         try:
-            await self._brink.set_switch_position(rate)
+            if self.modbus_contol_mode != 1:
+                await self._brink.set_modbus_control_switch_mode(1)  # set to switch mode
 
-            if rate > 0:
-                self.last_fan_rate = rate
+            await self._brink.set_switch_position(position)
+
+            if position > 0:
+                self.last_fan_position = position
         except Exception as e:
             _LOGGER.error("Set fan flow rate failed: %s", e)
 
