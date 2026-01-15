@@ -17,6 +17,8 @@ To connect your Brink HRV to Home Assistant via Modbus, a Modbus gateway device 
 4. In your web browser navigate to the IP address of your Modbus gateway and login (default there is no password, so just press 'login')
 5. Verify the required settings and submit them <img width="1918" height="1035" alt="afbeelding" src="https://github.com/user-attachments/assets/a2fb25c3-b146-483c-9349-e09ff10301e0" />
 6. Note down the <b>device IP address</b> and <b>device port</b>. You will need this information when configuring the Home Assistant integration.
+
+## Installation
 To install the Brink HRV Modbus Integration, follow these steps:
 
 #### HACS installation
