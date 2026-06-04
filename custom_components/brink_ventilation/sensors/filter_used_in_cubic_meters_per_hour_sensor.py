@@ -13,6 +13,7 @@ class FilterUsedInCubicMetersPerHourSensor(BrinkEntity, SensorEntity):
     """Filter Used in Cubic Meters per Hour Sensor"""
 
     _attr_name = "Filter Used in m³/h"
+    _attr_icon = "mdi:air-filter"
     _attr_native_unit_of_measurement = UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR
     _attr_device_class = SensorDeviceClass.VOLUME_FLOW_RATE
     _attr_state_class = SensorStateClass.MEASUREMENT
