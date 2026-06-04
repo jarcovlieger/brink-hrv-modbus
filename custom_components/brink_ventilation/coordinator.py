@@ -24,8 +24,10 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.last_fan_position = 1
         self.filter_dirty = False
         self.modbus_contol_mode = 0  # 0=off, 1=switch, 2=flow rate value
-        self.filter_used_in_hours = 0
         self.operating_hours = 0
+        self.filter_used_in_hours = 0
+        self.filter_used_in_cubic_meters_per_hour = 0
+        
 
     @classmethod
     async def initialize(cls, hass, host, port):
@@ -40,8 +42,9 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.fan_state = await self._brink.get_switch_position()
             self.filter_dirty = await self._brink.get_filter_dirty()
             self.modbus_contol_mode = await self._brink.get_modbus_control_switch_mode()
-            self.filter_used_in_hours = await self._brink.get_filter_used_in_hours()
             self.operating_hours = await self._brink.get_operating_hours()
+            self.filter_used_in_hours = await self._brink.get_filter_used_in_hours()
+            self.filter_used_in_cubic_meters_per_hour = await self._brink.get_filter_used_in_cubic_meters_per_hour()
         except Exception as e:
             _LOGGER.error("Modbus read failed: %s", e)
 
