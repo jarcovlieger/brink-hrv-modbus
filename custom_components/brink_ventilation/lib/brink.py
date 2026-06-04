@@ -31,6 +31,23 @@ class Brink():
         result = await self._client.read_input_registers(address=4046, count=1, device_id=self._device_id)
         return result.registers[0]/10.0 
     
+    async def get_operating_hours(self) -> 'int':
+        """
+        Gets the operating time in hours.
+        :return: Operating time in hours.
+        """
+        result = await self._client.read_input_registers(address=4113, count=2, device_id=self._device_id)
+        
+        if result.isError():
+            raise RuntimeError(result)
+
+        high_word = result.registers[0]
+        low_word = result.registers[1]
+
+        running_hours = (high_word << 16) | low_word
+
+        return running_hours    
+
     async def get_filter_used_in_hours(self) -> 'int':
         """
         Gets the filter used in hours.
