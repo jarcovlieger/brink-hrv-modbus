@@ -50,7 +50,7 @@ class BrinkFan(BrinkEntity,FanEntity):
         elif percentage is not None:
             await self.async_set_percentage(percentage)
         else:
-            await self.coordinator.set_switch_position(self.coordinator.last_fan_rate)
+            await self.coordinator.set_switch_position(self.coordinator.last_fan_position)
 
     async def async_turn_off(self, **kwargs):
         await self.coordinator.set_switch_position(0)
