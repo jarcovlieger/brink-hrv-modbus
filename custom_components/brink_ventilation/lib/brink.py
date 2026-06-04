@@ -23,6 +23,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4036, count=1, device_id=self._device_id)
         return result.registers[0]/10.0 
     
+    async def get_supply_fan_relative_humidity(self) -> 'float':
+        """
+        Gets the supply fan relative humidity.
+        :return: Relative humidity in percentage.
+        """
+        result = await self._client.read_input_registers(address=4037, count=1, device_id=self._device_id)
+        return result.registers[0] 
+    
     async def get_exhaust_fan_temperature(self) -> 'float':
         """
         Gets the exhaust fan temperature.
@@ -30,6 +38,14 @@ class Brink():
         """
         result = await self._client.read_input_registers(address=4046, count=1, device_id=self._device_id)
         return result.registers[0]/10.0 
+    
+    async def get_exhaust_fan_relative_humidity(self) -> 'float':
+        """
+        Gets the exhaust fan relative humidity.
+        :return: Relative humidity in percentage.
+        """
+        result = await self._client.read_input_registers(address=4047, count=1, device_id=self._device_id)
+        return result.registers[0] 
     
     async def get_operating_hours(self) -> 'int':
         """
