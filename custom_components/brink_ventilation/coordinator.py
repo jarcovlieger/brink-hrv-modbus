@@ -44,8 +44,10 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
     
     async def _async_update_data(self):
         try:
+            self.supply_fan_status = await self._brink.get_supply_fan_status()
             self.supply_temperature = await self._brink.get_supply_fan_temperature()
             self.supply_humidity = await self._brink.get_supply_fan_relative_humidity()
+            self.exhaust_fan_status = await self._brink.get_exhaust_fan_status()
             self.exhaust_temperature = await self._brink.get_exhaust_fan_temperature()
             self.exhaust_humidity = await self._brink.get_exhaust_fan_relative_humidity()
             self.fan_state = await self._brink.get_switch_position()

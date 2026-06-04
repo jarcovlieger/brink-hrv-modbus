@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import logging
 
+from .sensors.supply_fan_status_sensor import SupplyFanStatusSensor
 from .sensors.supply_temperature_sensor import SupplyTemperatureSensor
 from .sensors.supply_humidity_sensor import SupplyHumiditySensor
+from .sensors.exhaust_fan_status_sensor import ExhaustFanStatusSensor
 from .sensors.exhaust_temperature_sensor import ExhaustTemperatureSensor 
 from .sensors.exhaust_humidity_sensor import ExhaustHumiditySensor
 from .sensors.operating_hours_sensor import OperatingHoursSensor
@@ -26,10 +28,12 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities([
+        SupplyFanStatusSensor(coordinator, entry.entry_id),
         SupplyTemperatureSensor(coordinator, entry.entry_id),
         SupplyHumiditySensor(coordinator, entry.entry_id),
         ExhaustTemperatureSensor(coordinator, entry.entry_id),
         ExhaustHumiditySensor(coordinator, entry.entry_id),
+        ExhaustFanStatusSensor(coordinator, entry.entry_id),
         OperatingHoursSensor(coordinator, entry.entry_id),
         FilterUsedInHoursSensor(coordinator, entry.entry_id),
         FilterUsedInCubicMetersPerHourSensor(coordinator, entry.entry_id),
