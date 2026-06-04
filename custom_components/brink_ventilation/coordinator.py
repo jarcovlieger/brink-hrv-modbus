@@ -27,7 +27,14 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.operating_hours = 0
         self.filter_used_in_hours = 0
         self.filter_used_in_cubic_meters_per_hour = 0
-        
+        self.CO2_sensor_1_status = 0
+        self.CO2_sensor_2_status = 0
+        self.CO2_sensor_3_status = 0
+        self.CO2_sensor_4_status = 0
+        self.CO2_sensor_1 = 0
+        self.CO2_sensor_2 = 0 
+        self.CO2_sensor_3 = 0
+        self.CO2_sensor_4 = 0
 
     @classmethod
     async def initialize(cls, hass, host, port):
@@ -45,6 +52,14 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.operating_hours = await self._brink.get_operating_hours()
             self.filter_used_in_hours = await self._brink.get_filter_used_in_hours()
             self.filter_used_in_cubic_meters_per_hour = await self._brink.get_filter_used_in_cubic_meters_per_hour()
+            self.CO2_sensor_1_status = await self._brink.get_CO2_sensor_1_status()
+            self.CO2_sensor_2_status = await self._brink.get_CO2_sensor_2_status()
+            self.CO2_sensor_3_status = await self._brink.get_CO2_sensor_3_status()
+            self.CO2_sensor_4_status = await self._brink.get_CO2_sensor_4_status()
+            self.CO2_sensor_1 = await self._brink.get_CO2_sensor_1()
+            self.CO2_sensor_2 = await self._brink.get_CO2_sensor_2()
+            self.CO2_sensor_3 = await self._brink.get_CO2_sensor_3()
+            self.CO2_sensor_4 = await self._brink.get_CO2_sensor_4()
         except Exception as e:
             _LOGGER.error("Modbus read failed: %s", e)
 

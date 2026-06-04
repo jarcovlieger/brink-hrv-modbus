@@ -72,7 +72,71 @@ class Brink():
         cubic_meters_per_hour = (high_word << 16) | low_word
 
         return cubic_meters_per_hour    
-
+    
+    async def get_CO2_sensor_1_status(self) -> 'int':
+        """
+        Gets the CO2 sensor 1 status.
+        :return: CO2 sensor 1 status.
+        """
+        result = await self._client.read_input_registers(address=4200, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
+    async def get_CO2_sensor_1(self) -> 'int':
+        """
+        Gets the CO2 sensor 1.
+        :return: CO2 sensor 1.
+        """
+        result = await self._client.read_input_registers(address=4201, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
+    async def get_CO2_sensor_2_status(self) -> 'int':
+        """
+        Gets the CO2 sensor 2 status.
+        :return: CO2 sensor 2 status.
+        """
+        result = await self._client.read_input_registers(address=4202, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
+    async def get_CO2_sensor_2(self) -> 'int':
+        """
+        Gets the CO2 sensor 2.
+        :return: CO2 sensor 2.
+        """
+        result = await self._client.read_input_registers(address=4203, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
+    async def get_CO2_sensor_3_status(self) -> 'int':
+        """
+        Gets the CO2 sensor 3 status.
+        :return: CO2 sensor 3 status.
+        """
+        result = await self._client.read_input_registers(address=4204, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
+    async def get_CO2_sensor_3(self) -> 'int':
+        """
+        Gets the CO2 sensor 3.
+        :return: CO2 sensor 3.
+        """
+        result = await self._client.read_input_registers(address=4205, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
+    async def get_CO2_sensor_4_status(self) -> 'int':
+        """
+        Gets the CO2 sensor 4 status.
+        :return: CO2 sensor 4 status.
+        """
+        result = await self._client.read_input_registers(address=4206, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
+    async def get_CO2_sensor_4(self) -> 'int':
+        """
+        Gets the CO2 sensor 4.
+        :return: CO2 sensor 4.
+        """
+        result = await self._client.read_input_registers(address=4207, count=1, device_id=self._device_id)
+        return result.registers[0]
+    
     async def set_modbus_control_switch_mode(self, value: int) -> None:
         """
         Sets the Modbus control switched on register.
