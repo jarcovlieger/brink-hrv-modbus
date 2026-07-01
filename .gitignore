@@ -13,3 +13,4 @@ automations.yaml
 blueprints/
 .ha_run*
 .HA_VERSION
+/.cache
