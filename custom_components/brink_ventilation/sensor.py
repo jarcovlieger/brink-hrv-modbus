@@ -10,6 +10,7 @@ from .sensors.supply_humidity_sensor import SupplyHumiditySensor
 from .sensors.exhaust_fan_status_sensor import ExhaustFanStatusSensor
 from .sensors.exhaust_temperature_sensor import ExhaustTemperatureSensor 
 from .sensors.exhaust_humidity_sensor import ExhaustHumiditySensor
+from .sensors.bypass_status_sensor import BypassStatusSensor
 from .sensors.operating_hours_sensor import OperatingHoursSensor
 from .sensors.filter_used_in_hours_sensor import FilterUsedInHoursSensor
 from .sensors.filter_used_in_cubic_meters_per_hour_sensor import FilterUsedInCubicMetersPerHourSensor
@@ -34,6 +35,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         ExhaustTemperatureSensor(coordinator, entry.entry_id),
         ExhaustHumiditySensor(coordinator, entry.entry_id),
         ExhaustFanStatusSensor(coordinator, entry.entry_id),
+        BypassStatusSensor(coordinator, entry.entry_id),
         OperatingHoursSensor(coordinator, entry.entry_id),
         FilterUsedInHoursSensor(coordinator, entry.entry_id),
         FilterUsedInCubicMetersPerHourSensor(coordinator, entry.entry_id),
