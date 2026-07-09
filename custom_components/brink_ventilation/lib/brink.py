@@ -230,6 +230,21 @@ class Brink():
         """
         return await self._client.write_register(address=6120, value=value, device_id=self._device_id)
 
+    async def get_signal_output(self) -> int:
+        """
+        Gets the signal output setting register (6170).
+        :return: 0 = Off, 1 = Filter warning, 2 = Error status, 3 = Filter warning and error status.
+        """
+        result = await self._client.read_holding_registers(address=6170, device_id=self._device_id)
+        return result.registers[0]
+
+    async def set_signal_output(self, value: int) -> None:
+        """
+        Sets the signal output setting register (6170).
+        :param value: 0 = Off, 1 = Filter warning, 2 = Error status, 3 = Filter warning and error status.
+        """
+        return await self._client.write_register(address=6170, value=value, device_id=self._device_id)
+
     async def get_filter_dirty(self) -> bool:
         """
         Gets the filter dirty status.
