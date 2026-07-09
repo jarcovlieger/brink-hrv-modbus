@@ -25,6 +25,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.filter_dirty = False
         self.modbus_contol_mode = 0  # 0=off, 1=switch, 2=flow rate value
         self.standby_mode = 0  # readback of 8003: 0=not in standby, 1=in standby
+        self.signal_output = 0  # 6170: 0=off, 1=filter warning, 2=error, 3=both
         self.operating_hours = 0
         self.filter_used_in_hours = 0
         self.filter_used_in_cubic_meters_per_hour = 0
@@ -60,6 +61,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.filter_used_in_hours = await self._brink.get_filter_used_in_hours()
             self.filter_used_in_cubic_meters_per_hour = await self._brink.get_filter_used_in_cubic_meters_per_hour()
             self.filter_warning_days = await self._brink.get_filter_warning_days()
+            self.signal_output = await self._brink.get_signal_output()
             self.CO2_sensor_1_status = await self._brink.get_CO2_sensor_1_status()
             self.CO2_sensor_2_status = await self._brink.get_CO2_sensor_2_status()
             self.CO2_sensor_3_status = await self._brink.get_CO2_sensor_3_status()
@@ -92,6 +94,20 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.async_update_listeners()
         except Exception as e:
             _LOGGER.error("Set standby mode failed: %s", e)
+
+    async def set_signal_output(self, value: int) -> None:
+        """Write the signal output setting register (6170)."""
+        try:
+            await self._brink.set_signal_output(value)
+
+            # Optimistically reflect the new value and notify entities. We deliberately do
+            # NOT force an immediate refresh: the unit applies this setting with a short
+            # internal delay, so re-reading 6170 now returns the old value and snaps the
+            # select back. The regular 5s poll confirms it once the unit has committed.
+            self.signal_output = value
+            self.async_update_listeners()
+        except Exception as e:
+            _LOGGER.error("Set signal output failed: %s", e)
 
     async def reset_filter_warning(self) -> None:
         try:
