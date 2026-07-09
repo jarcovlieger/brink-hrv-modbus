@@ -24,4 +24,4 @@ class ExhaustTemperatureSensor(BrinkEntity, SensorEntity):
         
     @property
     def native_value(self):
-        return self.coordinator.supply_temperature
+        return self.coordinator.exhaust_temperature
