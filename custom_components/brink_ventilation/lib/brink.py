@@ -71,6 +71,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4070, count=1, device_id=self._device_id)
         return result.registers[0]
 
+    async def get_frost_heater_power(self) -> 'int':
+        """
+        Gets the frost heater power (register 4071).
+        :return: Heater output as a percentage (0-100).
+        """
+        result = await self._client.read_input_registers(address=4071, count=1, device_id=self._device_id)
+        return result.registers[0]
+
     async def get_exhaust_fan_status(self) -> 'int':
         """
         Gets the exhaust fan status.
