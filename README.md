@@ -5,9 +5,8 @@
 # Brink HRV Modbus Integration
 Home Assistant integration to connect your Brink HRV (Heat Recovery Ventilation) to Home Assistant via Modbus TCP.
 
-<img width="264" height="839" alt="afbeelding" src="https://github.com/user-attachments/assets/f21b46ae-b2a1-4d78-b96d-d8ddfade136c" />
+<img width="1232" height="1870" alt="Brink_HRA_Entities" src="https://github.com/user-attachments/assets/a7581b0e-e18c-4be7-b3d0-43c064742095" />
 
-<img width="266" height="191" alt="afbeelding" src="https://github.com/user-attachments/assets/552871a8-5ee1-419d-a881-4c92c615e301" />
 
 ## Hardware Setup
 To connect your Brink HRV to Home Assistant via Modbus, a Modbus gateway device is needed. I'm using the [Waveshare RS485 to RJ45 Ethernet Module](https://www.waveshare.com/rs485-to-eth-b.htm?sku=23273) , but any arbitrary Modbus gatway should work.
