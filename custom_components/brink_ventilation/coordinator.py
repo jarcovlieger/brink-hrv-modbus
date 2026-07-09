@@ -27,6 +27,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.preheater_capacity = 0  # 4061: 0-100 percentage of max capacity
         self.frost_status = 0  # 4070: frost state-machine code 0-16
         self.frost_heater_power = 0  # 4071: heater output 0-100 percent
+        self.frost_fan_reduction = 0  # 4072: fan reduction 0-100 percent
         self.filter_dirty = False
         self.modbus_contol_mode = 0  # 0=off, 1=switch, 2=flow rate value
         self.standby_mode = 0  # readback of 8003: 0=not in standby, 1=in standby
@@ -63,6 +64,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.preheater_capacity = await self._brink.get_preheater_capacity()
             self.frost_status = await self._brink.get_frost_status()
             self.frost_heater_power = await self._brink.get_frost_heater_power()
+            self.frost_fan_reduction = await self._brink.get_frost_fan_reduction()
             self.fan_state = await self._brink.get_switch_position()
             self.filter_dirty = await self._brink.get_filter_dirty()
             self.modbus_contol_mode = await self._brink.get_modbus_control_switch_mode()
