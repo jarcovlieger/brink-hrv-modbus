@@ -22,6 +22,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.exhaust_temperature = None
         self.fan_state = 0
         self.last_fan_position = 1
+        self.bypass_status = 0  # 4050: 0=initialize, 1=open, 2=close, 3=open, 4=closed
         self.filter_dirty = False
         self.modbus_contol_mode = 0  # 0=off, 1=switch, 2=flow rate value
         self.standby_mode = 0  # readback of 8003: 0=not in standby, 1=in standby
@@ -53,6 +54,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.exhaust_fan_status = await self._brink.get_exhaust_fan_status()
             self.exhaust_temperature = await self._brink.get_exhaust_fan_temperature()
             self.exhaust_humidity = await self._brink.get_exhaust_fan_relative_humidity()
+            self.bypass_status = await self._brink.get_bypass_status()
             self.fan_state = await self._brink.get_switch_position()
             self.filter_dirty = await self._brink.get_filter_dirty()
             self.modbus_contol_mode = await self._brink.get_modbus_control_switch_mode()

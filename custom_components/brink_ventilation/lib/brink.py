@@ -39,6 +39,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4037, count=1, device_id=self._device_id)
         return result.registers[0] 
     
+    async def get_bypass_status(self) -> 'int':
+        """
+        Gets the bypass status (register 4050).
+        :return: 0 = Initialize, 1 = Open, 2 = Close, 3 = Open, 4 = Closed.
+        """
+        result = await self._client.read_input_registers(address=4050, count=1, device_id=self._device_id)
+        return result.registers[0]
+
     async def get_exhaust_fan_status(self) -> 'int':
         """
         Gets the exhaust fan status.
