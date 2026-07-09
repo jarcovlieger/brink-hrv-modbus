@@ -3,6 +3,7 @@ Number entity to set the days before a filter warning for the custom Home Assist
 """
 from homeassistant.components.number import NumberEntity
 from homeassistant.const import UnitOfTime
+from homeassistant.helpers.entity import EntityCategory
 
 from ..entity import BrinkEntity
 
@@ -12,6 +13,7 @@ class FilterWarningDaysNumber(BrinkEntity, NumberEntity):
     _attr_has_entity_name = True
     _attr_name = "Days Before Filter Warning"
     _attr_icon = "mdi:air-filter"
+    _attr_entity_category = EntityCategory.CONFIG
     _attr_native_unit_of_measurement = UnitOfTime.DAYS
     _attr_native_min_value = 1
     _attr_native_max_value = 365
