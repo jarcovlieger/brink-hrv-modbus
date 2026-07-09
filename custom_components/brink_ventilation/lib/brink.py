@@ -79,6 +79,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4071, count=1, device_id=self._device_id)
         return result.registers[0]
 
+    async def get_frost_fan_reduction(self) -> 'int':
+        """
+        Gets the fan frost reduction (register 4072).
+        :return: Fan reduction as a percentage (0-100); 0 = no reduction, 100 = maximum.
+        """
+        result = await self._client.read_input_registers(address=4072, count=1, device_id=self._device_id)
+        return result.registers[0]
+
     async def get_exhaust_fan_status(self) -> 'int':
         """
         Gets the exhaust fan status.
