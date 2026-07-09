@@ -47,6 +47,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4050, count=1, device_id=self._device_id)
         return result.registers[0]
 
+    async def get_preheater_status(self) -> 'int':
+        """
+        Gets the preheater status (register 4060).
+        :return: 0 = Initialize, 1 = Inactive, 2 = Active, 3 = Test mode.
+        """
+        result = await self._client.read_input_registers(address=4060, count=1, device_id=self._device_id)
+        return result.registers[0]
+
     async def get_exhaust_fan_status(self) -> 'int':
         """
         Gets the exhaust fan status.
