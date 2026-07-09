@@ -24,6 +24,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.last_fan_position = 1
         self.filter_dirty = False
         self.modbus_contol_mode = 0  # 0=off, 1=switch, 2=flow rate value
+        self.standby_mode = 0  # readback of 8003: 0=not in standby, 1=in standby
         self.operating_hours = 0
         self.filter_used_in_hours = 0
         self.filter_used_in_cubic_meters_per_hour = 0
@@ -54,6 +55,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.fan_state = await self._brink.get_switch_position()
             self.filter_dirty = await self._brink.get_filter_dirty()
             self.modbus_contol_mode = await self._brink.get_modbus_control_switch_mode()
+            self.standby_mode = await self._brink.get_standby_mode()
             self.operating_hours = await self._brink.get_operating_hours()
             self.filter_used_in_hours = await self._brink.get_filter_used_in_hours()
             self.filter_used_in_cubic_meters_per_hour = await self._brink.get_filter_used_in_cubic_meters_per_hour()
@@ -80,6 +82,16 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
                 self.last_fan_position = position
         except Exception as e:
             _LOGGER.error("Set fan flow rate failed: %s", e)
+
+    async def set_standby_mode(self, value: int) -> None:
+        """Write the standby command register 8003 (write 1=standby, 2=normal)."""
+        try:
+            await self._brink.set_standby_mode(value)
+
+            self.standby_mode = 1 if value == 1 else 0
+            self.async_update_listeners()
+        except Exception as e:
+            _LOGGER.error("Set standby mode failed: %s", e)
 
     async def reset_filter_warning(self) -> None:
         try:

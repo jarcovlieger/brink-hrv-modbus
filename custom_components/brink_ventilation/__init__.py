@@ -13,7 +13,8 @@ _PLATFORMS: list[Platform] = [
     Platform.FAN,
     Platform.BINARY_SENSOR,
     Platform.BUTTON,
-    Platform.NUMBER]
+    Platform.NUMBER,
+    Platform.SWITCH]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Brink HRA Modbus from a config entry."""
