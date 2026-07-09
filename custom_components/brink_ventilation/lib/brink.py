@@ -200,6 +200,21 @@ class Brink():
         result = await self._client.read_holding_registers(address=8001, device_id=self._device_id)
         return result.registers[0]
 
+    async def get_standby_mode(self) -> int:
+        """
+        Gets the standby command register (8003). Readback is the actual standby status.
+        :return: 0 = Not in standby, 1 = In standby.
+        """
+        result = await self._client.read_holding_registers(address=8003, device_id=self._device_id)
+        return result.registers[0]
+
+    async def set_standby_mode(self, value: int) -> None:
+        """
+        Sets the standby command register (8003).
+        :param value: 0 = No action, 1 = Set standby, 2 = Set normal mode.
+        """
+        return await self._client.write_register(address=8003, value=value, device_id=self._device_id)
+
     async def get_filter_warning_days(self) -> int:
         """
         Gets the number of days before a filter warning is raised (register 6120).
