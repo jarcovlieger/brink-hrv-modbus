@@ -13,6 +13,7 @@ from .sensors.exhaust_humidity_sensor import ExhaustHumiditySensor
 from .sensors.bypass_status_sensor import BypassStatusSensor
 from .sensors.preheater_status_sensor import PreheaterStatusSensor
 from .sensors.preheater_capacity_sensor import PreheaterCapacitySensor
+from .sensors.frost_status_sensor import FrostStatusSensor
 from .sensors.operating_hours_sensor import OperatingHoursSensor
 from .sensors.filter_used_in_hours_sensor import FilterUsedInHoursSensor
 from .sensors.filter_used_in_cubic_meters_per_hour_sensor import FilterUsedInCubicMetersPerHourSensor
@@ -40,6 +41,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         BypassStatusSensor(coordinator, entry.entry_id),
         PreheaterStatusSensor(coordinator, entry.entry_id),
         PreheaterCapacitySensor(coordinator, entry.entry_id),
+        FrostStatusSensor(coordinator, entry.entry_id),
         OperatingHoursSensor(coordinator, entry.entry_id),
         FilterUsedInHoursSensor(coordinator, entry.entry_id),
         FilterUsedInCubicMetersPerHourSensor(coordinator, entry.entry_id),

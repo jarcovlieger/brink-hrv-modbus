@@ -63,6 +63,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4061, count=1, device_id=self._device_id)
         return result.registers[0]
 
+    async def get_frost_status(self) -> 'int':
+        """
+        Gets the frost status (register 4070).
+        :return: Frost state-machine code (0-16); see the Modbus documentation.
+        """
+        result = await self._client.read_input_registers(address=4070, count=1, device_id=self._device_id)
+        return result.registers[0]
+
     async def get_exhaust_fan_status(self) -> 'int':
         """
         Gets the exhaust fan status.
