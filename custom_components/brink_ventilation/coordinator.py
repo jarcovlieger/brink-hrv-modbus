@@ -27,6 +27,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.operating_hours = 0
         self.filter_used_in_hours = 0
         self.filter_used_in_cubic_meters_per_hour = 0
+        self.filter_warning_days = 0
         self.CO2_sensor_1_status = 0
         self.CO2_sensor_2_status = 0
         self.CO2_sensor_3_status = 0
@@ -56,6 +57,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.operating_hours = await self._brink.get_operating_hours()
             self.filter_used_in_hours = await self._brink.get_filter_used_in_hours()
             self.filter_used_in_cubic_meters_per_hour = await self._brink.get_filter_used_in_cubic_meters_per_hour()
+            self.filter_warning_days = await self._brink.get_filter_warning_days()
             self.CO2_sensor_1_status = await self._brink.get_CO2_sensor_1_status()
             self.CO2_sensor_2_status = await self._brink.get_CO2_sensor_2_status()
             self.CO2_sensor_3_status = await self._brink.get_CO2_sensor_3_status()
@@ -84,3 +86,10 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             await self._brink.reset_filter_warning()
         except Exception as e:
             _LOGGER.error("Reset filter warning failed: %s", e)
+
+    async def set_filter_warning_days(self, days: int) -> None:
+        try:
+            await self._brink.set_filter_warning_days(days)
+            await self.async_request_refresh()
+        except Exception as e:
+            _LOGGER.error("Set filter warning days failed: %s", e)

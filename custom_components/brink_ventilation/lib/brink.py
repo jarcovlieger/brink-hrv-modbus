@@ -200,6 +200,21 @@ class Brink():
         result = await self._client.read_holding_registers(address=8001, device_id=self._device_id)
         return result.registers[0]
 
+    async def get_filter_warning_days(self) -> int:
+        """
+        Gets the number of days before a filter warning is raised (register 6120).
+        :return: Days before filter warning (1-365).
+        """
+        result = await self._client.read_holding_registers(address=6120, device_id=self._device_id)
+        return result.registers[0]
+
+    async def set_filter_warning_days(self, value: int) -> None:
+        """
+        Sets the number of days before a filter warning is raised (register 6120).
+        :param value: Days before filter warning (1-365).
+        """
+        return await self._client.write_register(address=6120, value=value, device_id=self._device_id)
+
     async def get_filter_dirty(self) -> bool:
         """
         Gets the filter dirty status.
