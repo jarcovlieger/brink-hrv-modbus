@@ -6,7 +6,6 @@ from homeassistant.components.fan import (
 )
 from homeassistant.components.fan import FanEntity
 
-from .const import DOMAIN
 from .entity import BrinkEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,7 +18,7 @@ PRESETS = {
 }
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = entry.runtime_data
     async_add_entities([BrinkFan(coordinator, entry.entry_id)])
  
 class BrinkFan(BrinkEntity,FanEntity):

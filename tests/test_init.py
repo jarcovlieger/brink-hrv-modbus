@@ -34,6 +34,21 @@ async def test_setup_entry_succeeds_when_device_is_reachable(hass):
 
     assert entry.state is ConfigEntryState.LOADED
 
+    # One entity per platform, to guard against a platform silently failing
+    # to find the coordinator (e.g. during the runtime_data migration).
+    for entity_id in (
+        "sensor.brink_hrv_modbus_supply_temperature",
+        "fan.brink_hrv_modbus_ventilation",
+        "binary_sensor.brink_hrv_modbus_filter_status",
+        "button.brink_hrv_modbus_reset_filter_warning",
+        "number.brink_hrv_modbus_days_before_filter_warning",
+        "switch.brink_hrv_modbus_standby",
+        "select.brink_hrv_modbus_signal_output",
+    ):
+        state = hass.states.get(entity_id)
+        assert state is not None, f"{entity_id} was not set up"
+        assert state.state != "unavailable"
+
 
 async def test_setup_entry_retries_when_initial_connection_fails(hass):
     entry = MockConfigEntry(domain=DOMAIN, data=USER_INPUT)
