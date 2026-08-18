@@ -1,6 +1,6 @@
 import logging
 
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from datetime import timedelta
 from .lib.brink import Brink
@@ -83,7 +83,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.CO2_sensor_3 = await self._brink.get_CO2_sensor_3()
             self.CO2_sensor_4 = await self._brink.get_CO2_sensor_4()
         except Exception as e:
-            _LOGGER.error("Modbus read failed: %s", e)
+            raise UpdateFailed(f"Modbus read failed: {e}") from e
 
     async def set_switch_position(self, position: int):
         try:
