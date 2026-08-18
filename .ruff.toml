@@ -23,3 +23,14 @@ keep-runtime-typing = true
 
 [lint.mccabe]
 max-complexity = 25
+
+[lint.per-file-ignores]
+"tests/*" = [
+    "S101", # assert is the point of a test
+    "ANN001", # test functions/fixtures don't need argument annotations
+    "ANN201", # test functions/fixtures don't need return annotations
+    "ARG001", # pytest fixtures are requested for their side effects, not used directly
+    "D100", # no module docstring required in test files
+    "D103", # no docstring required on every test function
+    "PT022", # yield-with-no-teardown is the standard shape for enable_custom_integrations-style fixtures
+]

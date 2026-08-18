@@ -31,6 +31,7 @@ Code changes under `custom_components/brink_ventilation` require restarting `scr
 | `scripts/setup` | Installs `requirements_common.txt` and `requirements_dev.txt`. Runs automatically on container create. |
 | `scripts/develop` | Creates `config/` on first run, puts `custom_components` on `PYTHONPATH`, and starts `hass --debug`. |
 | `scripts/lint` | Runs `ruff format .` and `ruff check . --fix`. |
+| `scripts/test` | Runs the pytest suite under `tests/`. |
 | `config/configuration.yaml` | The only tracked file under `config/` — everything else there is runtime state and gitignored. |
 | `requirements_dev.txt` | Pinned `homeassistant` and `pymodbus` versions used for local development. |
 
