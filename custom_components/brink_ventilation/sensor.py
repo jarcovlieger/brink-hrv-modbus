@@ -27,12 +27,11 @@ from .sensors.co2_sensor_1_sensor import CO2Sensor1Sensor
 from .sensors.co2_sensor_2_sensor import CO2Sensor2Sensor
 from .sensors.co2_sensor_3_sensor import CO2Sensor3Sensor
 from .sensors.co2_sensor_4_sensor import CO2Sensor4Sensor
-from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = entry.runtime_data
     async_add_entities([
         SupplyFanStatusSensor(coordinator, entry.entry_id),
         SupplyTemperatureSensor(coordinator, entry.entry_id),

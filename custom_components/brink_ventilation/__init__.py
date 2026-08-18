@@ -7,8 +7,10 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from pymodbus.exceptions import ModbusException
-from .const import DOMAIN, CONF_HOST, CONF_PORT
+from .const import CONF_HOST, CONF_PORT
 from .coordinator import BrinkHrvModbusCoordinator
+
+type BrinkConfigEntry = ConfigEntry[BrinkHrvModbusCoordinator]
 
 _PLATFORMS: list[Platform] = [
     Platform.SENSOR,
@@ -19,7 +21,7 @@ _PLATFORMS: list[Platform] = [
     Platform.SWITCH,
     Platform.SELECT]
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: BrinkConfigEntry) -> bool:
     """Set up Brink HRA Modbus from a config entry."""
 
     host = entry.data[CONF_HOST]
@@ -30,7 +32,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except ModbusException as err:
         raise ConfigEntryNotReady(f"Could not connect to {host}:{port}") from err
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
+    entry.runtime_data = coordinator
 
     await coordinator.async_config_entry_first_refresh()
 
@@ -38,6 +40,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     return True
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+async def async_unload_entry(hass: HomeAssistant, entry: BrinkConfigEntry) -> bool:
     """Unload a config entry."""
     return await hass.config_entries.async_unload_platforms(entry, _PLATFORMS)
