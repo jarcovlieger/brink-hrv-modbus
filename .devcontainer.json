@@ -29,6 +29,7 @@
                 "files.trimTrailingWhitespace": true,
                 "python.analysis.typeCheckingMode": "basic",
                 "python.analysis.autoImportCompletions": true,
+                "python.testing.pytestEnabled": true,
                 "[python]": {
                     "editor.defaultFormatter": "charliermarsh.ruff"
                 }
