@@ -48,6 +48,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.supply_flow = 0  # 4032: actual supply flow, m3/h
         self.exhaust_flow_setpoint = 0  # 4041: desired exhaust flow, m3/h
         self.exhaust_flow = 0  # 4042: actual exhaust flow, m3/h
+        self.active_function = 0  # 4020: overall HRA active function/operating mode
 
     @classmethod
     async def initialize(cls, hass, host, port):
@@ -90,6 +91,7 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.supply_flow = await self._brink.get_supply_fan_flow()
             self.exhaust_flow_setpoint = await self._brink.get_exhaust_fan_flow_setpoint()
             self.exhaust_flow = await self._brink.get_exhaust_fan_flow()
+            self.active_function = await self._brink.get_active_function()
         except Exception as e:
             raise UpdateFailed(f"Modbus read failed: {e}") from e
 

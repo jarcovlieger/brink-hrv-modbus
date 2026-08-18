@@ -31,6 +31,7 @@ from .sensors.supply_flow_setpoint_sensor import SupplyFlowSetpointSensor
 from .sensors.supply_flow_sensor import SupplyFlowSensor
 from .sensors.exhaust_flow_setpoint_sensor import ExhaustFlowSetpointSensor
 from .sensors.exhaust_flow_sensor import ExhaustFlowSensor
+from .sensors.active_function_sensor import ActiveFunctionSensor
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -64,5 +65,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
         SupplyFlowSensor(coordinator, entry.entry_id),
         ExhaustFlowSetpointSensor(coordinator, entry.entry_id),
         ExhaustFlowSensor(coordinator, entry.entry_id),
+        ActiveFunctionSensor(coordinator, entry.entry_id),
         ])
 

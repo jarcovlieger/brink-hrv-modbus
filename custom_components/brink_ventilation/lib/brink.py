@@ -77,6 +77,14 @@ class Brink():
         result = await self._client.read_input_registers(address=4042, count=1, device_id=self._device_id)
         return result.registers[0]
 
+    async def get_active_function(self) -> 'int':
+        """
+        Gets the HRA's overall active function (register 4020).
+        :return: Active function code (0-14); see the Modbus documentation.
+        """
+        result = await self._client.read_input_registers(address=4020, count=1, device_id=self._device_id)
+        return result.registers[0]
+
     async def get_bypass_status(self) -> 'int':
         """
         Gets the bypass status (register 4050).

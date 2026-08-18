@@ -56,3 +56,14 @@ async def test_flow_getter_applies_no_scaling(method_name):
     value = await getattr(brink, method_name)()
 
     assert value == 123
+
+
+async def test_get_active_function_reads_correct_register():
+    brink, client = _brink_with_mock_client(register_value=8)
+
+    value = await brink.get_active_function()
+
+    client.read_input_registers.assert_awaited_once_with(
+        address=4020, count=1, device_id=DEVICE_ID
+    )
+    assert value == 8
