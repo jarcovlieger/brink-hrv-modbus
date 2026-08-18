@@ -30,3 +30,5 @@ coverage.xml
 # Home Assistant devcontainer config (test instance) — keep only configuration.yaml
 config/*
 !config/configuration.yaml
+/.claude
+/openspec
