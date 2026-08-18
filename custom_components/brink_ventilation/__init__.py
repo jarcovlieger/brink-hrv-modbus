@@ -5,6 +5,8 @@ from __future__ import annotations
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryNotReady
+from pymodbus.exceptions import ModbusException
 from .const import DOMAIN, CONF_HOST, CONF_PORT
 from .coordinator import BrinkHrvModbusCoordinator
 
@@ -23,7 +25,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     host = entry.data[CONF_HOST]
     port = entry.data[CONF_PORT]
 
-    coordinator = await BrinkHrvModbusCoordinator.initialize(hass, host, port)
+    try:
+        coordinator = await BrinkHrvModbusCoordinator.initialize(hass, host, port)
+    except ModbusException as err:
+        raise ConfigEntryNotReady(f"Could not connect to {host}:{port}") from err
+
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
 
     await coordinator.async_config_entry_first_refresh()
