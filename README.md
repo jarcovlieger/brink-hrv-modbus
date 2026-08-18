@@ -39,6 +39,12 @@ To install the Brink HRV Modbus Integration, follow these steps:
 3. Search for <b>"Brink HRV Modbus"</b>
 4. Add in the <b>IP</b> of your modbus gateway and <b>port</b>
 
+## Removal
+1. Navigate to <b>Settings -> Devices & Services</b>
+2. Find the <b>Brink HRV Modbus</b> integration and select <b>Delete</b>
+
+This removes the config entry and all of its entities from Home Assistant. No steps are needed on the Modbus gateway or the HRV unit itself — removing the integration doesn't change any settings on the device.
+
 ## Documentation
 [modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf](https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf)
 
