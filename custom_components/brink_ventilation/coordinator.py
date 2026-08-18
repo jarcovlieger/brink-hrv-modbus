@@ -41,9 +41,13 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.CO2_sensor_3_status = 0
         self.CO2_sensor_4_status = 0
         self.CO2_sensor_1 = 0
-        self.CO2_sensor_2 = 0 
+        self.CO2_sensor_2 = 0
         self.CO2_sensor_3 = 0
         self.CO2_sensor_4 = 0
+        self.supply_flow_setpoint = 0  # 4031: desired supply flow, m3/h
+        self.supply_flow = 0  # 4032: actual supply flow, m3/h
+        self.exhaust_flow_setpoint = 0  # 4041: desired exhaust flow, m3/h
+        self.exhaust_flow = 0  # 4042: actual exhaust flow, m3/h
 
     @classmethod
     async def initialize(cls, hass, host, port):
@@ -82,6 +86,10 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.CO2_sensor_2 = await self._brink.get_CO2_sensor_2()
             self.CO2_sensor_3 = await self._brink.get_CO2_sensor_3()
             self.CO2_sensor_4 = await self._brink.get_CO2_sensor_4()
+            self.supply_flow_setpoint = await self._brink.get_supply_fan_flow_setpoint()
+            self.supply_flow = await self._brink.get_supply_fan_flow()
+            self.exhaust_flow_setpoint = await self._brink.get_exhaust_fan_flow_setpoint()
+            self.exhaust_flow = await self._brink.get_exhaust_fan_flow()
         except Exception as e:
             raise UpdateFailed(f"Modbus read failed: {e}") from e
 

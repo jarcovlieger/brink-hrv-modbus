@@ -45,6 +45,38 @@ class Brink():
         result = await self._client.read_input_registers(address=4037, count=1, device_id=self._device_id)
         return result.registers[0] 
     
+    async def get_supply_fan_flow_setpoint(self) -> 'int':
+        """
+        Gets the desired supply air flow rate (register 4031).
+        :return: Setpoint flow rate in m3/h.
+        """
+        result = await self._client.read_input_registers(address=4031, count=1, device_id=self._device_id)
+        return result.registers[0]
+
+    async def get_supply_fan_flow(self) -> 'int':
+        """
+        Gets the current measured/calculated supply air flow rate (register 4032).
+        :return: Actual flow rate in m3/h.
+        """
+        result = await self._client.read_input_registers(address=4032, count=1, device_id=self._device_id)
+        return result.registers[0]
+
+    async def get_exhaust_fan_flow_setpoint(self) -> 'int':
+        """
+        Gets the desired exhaust air flow rate (register 4041).
+        :return: Setpoint flow rate in m3/h.
+        """
+        result = await self._client.read_input_registers(address=4041, count=1, device_id=self._device_id)
+        return result.registers[0]
+
+    async def get_exhaust_fan_flow(self) -> 'int':
+        """
+        Gets the current measured/calculated exhaust air flow rate (register 4042).
+        :return: Actual flow rate in m3/h.
+        """
+        result = await self._client.read_input_registers(address=4042, count=1, device_id=self._device_id)
+        return result.registers[0]
+
     async def get_bypass_status(self) -> 'int':
         """
         Gets the bypass status (register 4050).

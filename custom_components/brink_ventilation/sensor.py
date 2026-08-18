@@ -27,6 +27,10 @@ from .sensors.co2_sensor_1_sensor import CO2Sensor1Sensor
 from .sensors.co2_sensor_2_sensor import CO2Sensor2Sensor
 from .sensors.co2_sensor_3_sensor import CO2Sensor3Sensor
 from .sensors.co2_sensor_4_sensor import CO2Sensor4Sensor
+from .sensors.supply_flow_setpoint_sensor import SupplyFlowSetpointSensor
+from .sensors.supply_flow_sensor import SupplyFlowSensor
+from .sensors.exhaust_flow_setpoint_sensor import ExhaustFlowSetpointSensor
+from .sensors.exhaust_flow_sensor import ExhaustFlowSensor
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -56,5 +60,9 @@ async def async_setup_entry(hass, entry, async_add_entities):
         CO2Sensor2Sensor(coordinator, entry.entry_id),
         CO2Sensor3Sensor(coordinator, entry.entry_id),
         CO2Sensor4Sensor(coordinator, entry.entry_id),
+        SupplyFlowSetpointSensor(coordinator, entry.entry_id),
+        SupplyFlowSensor(coordinator, entry.entry_id),
+        ExhaustFlowSetpointSensor(coordinator, entry.entry_id),
+        ExhaustFlowSensor(coordinator, entry.entry_id),
         ])
 
