@@ -1,0 +1,16 @@
+# Minimal set for developing a custom integration — avoids the heavier
+# default_config components (camera/stream, cloud, bluetooth, dhcp/ssdp
+# discovery, hassio-supervisor stubs, ...) which pull in extra pip
+# dependencies not needed here and are prone to first-boot install races.
+# https://www.home-assistant.io/integrations/frontend/
+frontend:
+
+# https://www.home-assistant.io/integrations/homeassistant/
+homeassistant:
+  debug: true
+
+# https://www.home-assistant.io/integrations/logger/
+logger:
+  default: info
+  logs:
+    custom_components.brink_ventilation: debug

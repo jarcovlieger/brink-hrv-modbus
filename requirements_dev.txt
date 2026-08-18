@@ -1,0 +1,4 @@
+-r requirements_lint.txt
+colorlog==6.10.1
+homeassistant==2026.6.4
+pymodbus==3.11.2

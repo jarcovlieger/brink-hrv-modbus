@@ -42,5 +42,8 @@ To install the Brink HRV Modbus Integration, follow these steps:
 ## Documentation
 [modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf](https://www.brinkclimatesystems.nl/documenten/modbus-uwa2-b-uwa2-e-installation-regulations-614882.pdf)
 
+## Development
+Want to work on this integration? See [DEVELOPMENT.md](DEVELOPMENT.md) for the dev container setup and how to run a local Home Assistant test instance.
+
 ## Tested devices
 - Brink Flair 300
