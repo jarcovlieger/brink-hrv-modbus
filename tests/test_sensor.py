@@ -51,3 +51,42 @@ async def test_flow_sensors_report_coordinator_values(hass):
         assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m³/h"
         assert state.attributes[ATTR_DEVICE_CLASS] == "volume_flow_rate"
         assert state.attributes[ATTR_STATE_CLASS] == SensorStateClass.MEASUREMENT
+
+
+async def test_active_function_sensor_maps_known_value_to_name(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data=USER_INPUT)
+    entry.add_to_hass(hass)
+
+    brink = _mock_brink()
+    brink.get_active_function = AsyncMock(return_value=8)
+
+    with patch(
+        "custom_components.brink_ventilation.coordinator.Brink.initialize",
+        new=AsyncMock(return_value=brink),
+    ):
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+
+    state = hass.states.get("sensor.brink_hrv_modbus_active_function")
+    assert state is not None
+    assert state.state == "Bypass Boost"
+    assert state.attributes[ATTR_DEVICE_CLASS] == "enum"
+
+
+async def test_active_function_sensor_falls_back_to_unknown(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data=USER_INPUT)
+    entry.add_to_hass(hass)
+
+    brink = _mock_brink()
+    brink.get_active_function = AsyncMock(return_value=99)
+
+    with patch(
+        "custom_components.brink_ventilation.coordinator.Brink.initialize",
+        new=AsyncMock(return_value=brink),
+    ):
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+
+    state = hass.states.get("sensor.brink_hrv_modbus_active_function")
+    assert state is not None
+    assert state.state == "Unknown"

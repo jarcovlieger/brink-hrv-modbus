@@ -30,3 +30,14 @@ async def test_update_data_populates_flow_attributes(hass):
     assert coordinator.supply_flow == 95
     assert coordinator.exhaust_flow_setpoint == 90
     assert coordinator.exhaust_flow == 85
+
+
+async def test_update_data_populates_active_function(hass):
+    coordinator = BrinkHrvModbusCoordinator(hass)
+    brink = _mock_brink()
+    brink.get_active_function = AsyncMock(return_value=8)
+    coordinator._brink = brink
+
+    await coordinator._async_update_data()
+
+    assert coordinator.active_function == 8
