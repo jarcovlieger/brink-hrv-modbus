@@ -49,6 +49,11 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
         self.exhaust_flow_setpoint = 0  # 4041: desired exhaust flow, m3/h
         self.exhaust_flow = 0  # 4042: actual exhaust flow, m3/h
         self.active_function = 0  # 4020: overall HRA active function/operating mode
+        self.bypass_mode = 0  # 6100: 0=automatic, 1=closed, 2=open
+        self.bypass_temperature_from_dwelling = 0.0  # 6101: degrees Celsius
+        self.bypass_temperature_from_outside = 0.0  # 6102: degrees Celsius
+        self.bypass_temperature_hysteresis = 0.0  # 6103: degrees Celsius
+        self.bypass_boost = 0  # 6104: 0=off, 1=on
 
     @classmethod
     async def initialize(cls, hass, host, port):
@@ -92,6 +97,11 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             self.exhaust_flow_setpoint = await self._brink.get_exhaust_fan_flow_setpoint()
             self.exhaust_flow = await self._brink.get_exhaust_fan_flow()
             self.active_function = await self._brink.get_active_function()
+            self.bypass_mode = await self._brink.get_bypass_mode()
+            self.bypass_temperature_from_dwelling = await self._brink.get_bypass_temperature_from_dwelling()
+            self.bypass_temperature_from_outside = await self._brink.get_bypass_temperature_from_outside()
+            self.bypass_temperature_hysteresis = await self._brink.get_bypass_temperature_hysteresis()
+            self.bypass_boost = await self._brink.get_bypass_boost()
         except Exception as e:
             raise UpdateFailed(f"Modbus read failed: {e}") from e
 
@@ -143,3 +153,49 @@ class BrinkHrvModbusCoordinator(DataUpdateCoordinator):
             await self.async_request_refresh()
         except Exception as e:
             _LOGGER.error("Set filter warning days failed: %s", e)
+
+    async def set_bypass_mode(self, value: int) -> None:
+        """Write the bypass mode override register (6100)."""
+        try:
+            await self._brink.set_bypass_mode(value)
+
+            # Optimistically reflect the new value, same as set_signal_output: the
+            # regular 5s poll confirms it once the unit has committed the change.
+            self.bypass_mode = value
+            self.async_update_listeners()
+        except Exception as e:
+            _LOGGER.error("Set bypass mode failed: %s", e)
+
+    async def set_bypass_temperature_from_dwelling(self, value: float) -> None:
+        """Write the bypass-open dwelling temperature threshold (register 6101)."""
+        try:
+            await self._brink.set_bypass_temperature_from_dwelling(value)
+            await self.async_request_refresh()
+        except Exception as e:
+            _LOGGER.error("Set bypass temperature from dwelling failed: %s", e)
+
+    async def set_bypass_temperature_from_outside(self, value: float) -> None:
+        """Write the bypass-open outside temperature threshold (register 6102)."""
+        try:
+            await self._brink.set_bypass_temperature_from_outside(value)
+            await self.async_request_refresh()
+        except Exception as e:
+            _LOGGER.error("Set bypass temperature from outside failed: %s", e)
+
+    async def set_bypass_temperature_hysteresis(self, value: float) -> None:
+        """Write the bypass temperature hysteresis (register 6103)."""
+        try:
+            await self._brink.set_bypass_temperature_hysteresis(value)
+            await self.async_request_refresh()
+        except Exception as e:
+            _LOGGER.error("Set bypass temperature hysteresis failed: %s", e)
+
+    async def set_bypass_boost(self, value: int) -> None:
+        """Write the bypass boost register (6104)."""
+        try:
+            await self._brink.set_bypass_boost(value)
+
+            self.bypass_boost = value
+            self.async_update_listeners()
+        except Exception as e:
+            _LOGGER.error("Set bypass boost failed: %s", e)

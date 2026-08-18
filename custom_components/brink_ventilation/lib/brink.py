@@ -339,6 +339,81 @@ class Brink():
         """
         return await self._client.write_register(address=6170, value=value, device_id=self._device_id)
 
+    async def get_bypass_mode(self) -> int:
+        """
+        Gets the bypass mode override register (6100).
+        :return: 0 = Automatic function, 1 = Bypass closed, 2 = Bypass open.
+        """
+        result = await self._client.read_holding_registers(address=6100, device_id=self._device_id)
+        return result.registers[0]
+
+    async def set_bypass_mode(self, value: int) -> None:
+        """
+        Sets the bypass mode override register (6100).
+        :param value: 0 = Automatic function, 1 = Bypass closed, 2 = Bypass open.
+        """
+        return await self._client.write_register(address=6100, value=value, device_id=self._device_id)
+
+    async def get_bypass_temperature_from_dwelling(self) -> float:
+        """
+        Gets the bypass-open dwelling temperature threshold (register 6101).
+        :return: Temperature in degrees Celsius.
+        """
+        result = await self._client.read_holding_registers(address=6101, device_id=self._device_id)
+        return result.registers[0] / 10.0
+
+    async def set_bypass_temperature_from_dwelling(self, value: float) -> None:
+        """
+        Sets the bypass-open dwelling temperature threshold (register 6101).
+        :param value: Temperature in degrees Celsius.
+        """
+        return await self._client.write_register(address=6101, value=round(value * 10), device_id=self._device_id)
+
+    async def get_bypass_temperature_from_outside(self) -> float:
+        """
+        Gets the bypass-open outside temperature threshold (register 6102).
+        :return: Temperature in degrees Celsius.
+        """
+        result = await self._client.read_holding_registers(address=6102, device_id=self._device_id)
+        return result.registers[0] / 10.0
+
+    async def set_bypass_temperature_from_outside(self, value: float) -> None:
+        """
+        Sets the bypass-open outside temperature threshold (register 6102).
+        :param value: Temperature in degrees Celsius.
+        """
+        return await self._client.write_register(address=6102, value=round(value * 10), device_id=self._device_id)
+
+    async def get_bypass_temperature_hysteresis(self) -> float:
+        """
+        Gets the bypass temperature hysteresis (register 6103).
+        :return: Temperature in degrees Celsius.
+        """
+        result = await self._client.read_holding_registers(address=6103, device_id=self._device_id)
+        return result.registers[0] / 10.0
+
+    async def set_bypass_temperature_hysteresis(self, value: float) -> None:
+        """
+        Sets the bypass temperature hysteresis (register 6103).
+        :param value: Temperature in degrees Celsius.
+        """
+        return await self._client.write_register(address=6103, value=round(value * 10), device_id=self._device_id)
+
+    async def get_bypass_boost(self) -> int:
+        """
+        Gets the bypass boost register (6104).
+        :return: 0 = Off, 1 = On.
+        """
+        result = await self._client.read_holding_registers(address=6104, device_id=self._device_id)
+        return result.registers[0]
+
+    async def set_bypass_boost(self, value: int) -> None:
+        """
+        Sets the bypass boost register (6104).
+        :param value: 0 = Off, 1 = On.
+        """
+        return await self._client.write_register(address=6104, value=value, device_id=self._device_id)
+
     async def get_filter_dirty(self) -> bool:
         """
         Gets the filter dirty status.
