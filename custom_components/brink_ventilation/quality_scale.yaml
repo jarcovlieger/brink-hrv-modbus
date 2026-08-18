@@ -1,13 +1,17 @@
 rules:
   # Bronze
-  action-setup: todo
+  action-setup:
+    status: exempt
+    comment: This integration does not register any custom actions/services.
   appropriate-polling: done
   brands: done
   common-modules: done
   config-flow-test-coverage: todo
   config-flow: done
   dependency-transparency: done
-  docs-actions: todo
+  docs-actions:
+    status: exempt
+    comment: This integration does not register any custom actions/services.
   docs-high-level-description: done
   docs-installation-instructions: done
   docs-removal-instructions: todo
