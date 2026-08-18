@@ -1,7 +1,8 @@
 from pymodbus.client import AsyncModbusTcpClient
+from pymodbus.exceptions import ConnectionException
 
 class Brink():
-    _client: AsyncModbusTcpClient = None 
+    _client: AsyncModbusTcpClient = None
     _device_id = 20
 
     def __init__(self, device_id = 20):
@@ -12,9 +13,14 @@ class Brink():
         """Async factory method to return an initialized instance."""
         self = cls(device_id)
         self._client = AsyncModbusTcpClient(host, port=port)
-        await self._client.connect()
+        if not await self._client.connect():
+            raise ConnectionException(f"Could not connect to {host}:{port}")
         return self
-    
+
+    def close(self) -> None:
+        """Close the underlying Modbus connection."""
+        self._client.close()
+
     async def get_supply_fan_status(self) -> 'int':
         """
         Gets the supply fan status.
